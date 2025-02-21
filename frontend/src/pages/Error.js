@@ -14,7 +14,7 @@ export default function ErrorPage(){
         message = error.data.message;  
     }
 
-    if(error.status == 404){
+    if(error.status === 404){
         title = 'Not Found!'
         message = 'Could not find resource or page.'
     }
