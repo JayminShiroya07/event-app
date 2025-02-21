@@ -19,38 +19,51 @@
 //    Every list item should include a link to the respective EventDetailPage
 // 7. Output the ID of the selected event on the EventDetailPage
 // BONUS: Add another (nested) layout route that adds the <EventNavigation> component above all /events... page components
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import HomePage from './pages/Home';
-import EventsPage from './pages/Events';
-import EventDetailPage from './pages/EventDetail';
-import NewEventPage from './pages/NewEven';
-import EditEventPage from './pages/EditEvent';
-import RootLayout from './pages/Root';
-import EventRootLayout from './pages/EventsRoot';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import HomePage from "./pages/Home";
+import EventsPage, {loader as eventLoader} from "./pages/Events";
+import EventDetailPage ,{loader as eventDetailLoader} from "./pages/EventDetail";
+import NewEventPage from "./pages/NewEven";
+import EditEventPage from "./pages/EditEvent";
+import RootLayout from "./pages/Root";
+import EventRootLayout from "./pages/EventsRoot";
+import ErrorPage from "./pages/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage/>,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "events",
+      {
+        path: "events",
         element: <EventRootLayout />,
         children: [
-          { index: true, element: <EventsPage /> },
-          { path: ":eventId", element: <EventDetailPage /> },
+          {
+            index: true,
+            element: <EventsPage />, 
+            loader: eventLoader 
+          },
+          { 
+            path: ":eventId", 
+            element: <EventDetailPage />,
+            loader: eventDetailLoader,
+          },
           { path: "new", element: <NewEventPage /> },
           { path: ":eventId/edit", element: <EditEventPage /> },
         ],
       },
     ],
   },
-]);
+],{
+  future: {
+    v7_startTransition: true, // Enable the future flag here
+  },
+});
 
 function App() {
-  return <RouterProvider router={router}>
-    
-  </RouterProvider>;
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;
