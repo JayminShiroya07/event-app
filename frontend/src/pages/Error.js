@@ -11,7 +11,7 @@ export default function ErrorPage(){
     let message = 'Somthing went wrong';
 
     if(error.status === 500){
-        message = JSON.parse(error.data).message;  
+        message = error.data.message;  
     }
 
     if(error.status == 404){
