@@ -10,3 +10,4 @@ function PageContent({ title, children }) {
 }
 
 export default PageContent;
+

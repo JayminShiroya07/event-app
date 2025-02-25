@@ -1,6 +1,7 @@
 const express = require('express');
 
 const { getAll, get, add, replace, remove } = require('../data/event');
+const { checkAuth } = require('../util/auth');
 const {
   isValidText,
   isValidDate,
@@ -10,6 +11,7 @@ const {
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
+  console.log(req.token);
   try {
     const events = await getAll();
     setTimeout(() => {
@@ -29,7 +31,10 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+router.use(checkAuth);
+
 router.post('/', async (req, res, next) => {
+  console.log(req.token);
   const data = req.body;
 
   let errors = {};

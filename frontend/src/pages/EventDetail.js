@@ -1,20 +1,27 @@
-import { Await, defer, redirect, useRouteLoaderData } from "react-router-dom";
-import { json } from "react-router-dom";
-import EventItem from "../components/EventItem";
-import EventsList from "../components/EventsList";
-import { Suspense } from "react";
+import { Suspense } from 'react';
+import {
+  useRouteLoaderData,
+  json,
+  redirect,
+  defer,
+  Await,
+} from 'react-router-dom';
 
-export default function EventDetailPage() {
-  const { event, events } = useRouteLoaderData("event-detail");
+import EventItem from '../components/EventItem';
+import EventsList from '../components/EventsList';
+import { getAuthToken } from '../util/auth';
+
+function EventDetailPage() {
+  const { event, events } = useRouteLoaderData('event-detail');
 
   return (
     <>
-      <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
+      <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
         <Await resolve={event}>
           {(loadedEvent) => <EventItem event={loadedEvent} />}
         </Await>
       </Suspense>
-      <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
+      <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
         <Await resolve={events}>
           {(loadedEvents) => <EventsList events={loadedEvents} />}
         </Await>
@@ -23,52 +30,67 @@ export default function EventDetailPage() {
   );
 }
 
+export default EventDetailPage;
+
 async function loadEvent(id) {
-  const response = await fetch("http://localhost:8000/events/" + id);
+  const response = await fetch('http://localhost:8000/events/' + id);
 
   if (!response.ok) {
-    return json(
-      { message: "Could not fetch detials for selected event." },
-      { status: 500 }
+    throw json(
+      { message: 'Could not fetch details for selected event.' },
+      {
+        status: 500,
+      }
     );
   } else {
-    const resDate = await response.json();
-    console.log(resDate.event)
-    return resDate.event;
+    const resData = await response.json();
+    return resData.event;
   }
 }
 
 async function loadEvents() {
-  const response = await fetch("http://localhost:8000/events");
+  const response = await fetch('http://localhost:8000/events');
 
   if (!response.ok) {
-    console.log("response -> ", response.ok);
-    throw json({ message: "could not fetch events." }, { status: 500 });
+    throw json(
+      { message: 'Could not fetch events.' },
+      {
+        status: 500,
+      }
+    );
   } else {
-    const resDate = await response.json();
-    console.log("resData : ",resDate.events)
-    return resDate.events;
+    const resData = await response.json();
+    return resData.events;
   }
 }
 
-export async function loader(requset) {
-  const id = requset.params.eventId;
+export async function loader({ request, params }) {
+  const id = params.eventId;
+
   return defer({
     event: await loadEvent(id),
     events: loadEvents(),
   });
 }
 
+const token = getAuthToken()
+
 export async function action({ params, request }) {
   const eventId = params.eventId;
-  const response = await fetch("http://localhost:8000/events/" + eventId, {
+  const response = await fetch('http://localhost:8000/events/' + eventId, {
     method: request.method,
+    headers:{
+      "Authorization": "Bearer " + token
+    }
   });
 
   if (!response.ok) {
-    throw new Response(JSON.stringify({ message: "Could not delete event." }), {
-      status: 500,
-    });
+    throw json(
+      { message: 'Could not delete event.' },
+      {
+        status: 500,
+      }
+    );
   }
-  return redirect("/events");
+  return redirect('/events');
 }
