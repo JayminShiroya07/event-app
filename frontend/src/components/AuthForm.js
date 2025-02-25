@@ -1,15 +1,15 @@
-import { Form, Link, useActionData, useSearchParams } from 'react-router-dom';
+import { Form, Link, useActionData, useSearchParams, useNavigation } from 'react-router-dom';
 
 import classes from './AuthForm.module.css';
 
 function AuthForm() {
   const data = useActionData();
+  const navigation = useNavigation();
+
   const [searchParams] = useSearchParams();
-
-
   const isLogin = searchParams.get('mode') === 'login';
-  const isSubmitting = data && data.status === 'loading';
-  
+  const isSubmitting = navigation.state === 'submitting';
+
 
   return (
     <>
