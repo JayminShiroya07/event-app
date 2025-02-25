@@ -1,1 +1,12 @@
-{"events":[{"title":"demo 3.1","image":"https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg","date":"2025-02-13","description":"demo text","id":"2e4d28ed-5767-4f3a-b2e6-3ea3e3b95ca9"},{"title":"demo 1","image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ718nztPNJfCbDJjZG8fOkejBnBAeQw5eAUA&s","date":"2025-02-21","description":"demo text and demo description\n","id":"bb879bdc-c299-4b6f-a3e1-0ebacfbd546d"},{"title":"dme","image":"https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg","date":"2025-02-20","description":"add any text","id":"6241834a-da7e-4eea-acf7-93d096aba1a9"},{"title":"asd","image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ718nztPNJfCbDJjZG8fOkejBnBAeQw5eAUA&s","date":"1212-12-12","description":"asdcdsedw","id":"4cb9f918-b000-4ce4-8ee8-918fc9ad733c"}]}
+{
+  "events": [
+    {
+      "title": "A new event",
+      "image": "https://cdn.muenchen-p.de/fl_progressive,q_65/.imaging/stk/responsive/teaser300/dms/va-2016/muenchner-christkindlmarkt/christkindlmarkt-marienplat-logo-hp/document/christkindlmarkt-marienplat-logo-hp.jpg",
+      "date": "2022-10-01",
+      "description": "Some awesome event!",
+      "id": "2a42fcc4-ea21-4bdd-abf6-c40006dc66a9"
+    }
+  ],
+  "users": []
+}
